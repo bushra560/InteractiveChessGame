@@ -6,3 +6,4 @@
 //	cout << "error";
 //
 //}
+hyeeee i am checking syncing and testing through various ways
