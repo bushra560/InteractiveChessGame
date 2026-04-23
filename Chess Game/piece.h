@@ -32,7 +32,7 @@ public:
 
 	bool isValid_Move(int r, int co) override;
 	//Every piece must define its own movement rule
-
+	// a pawn can only move forward one square (or two squares on its first move)
 };
 class Rook : public Piece
 {
@@ -41,4 +41,32 @@ public:
 
 	bool isValid_Move(int r, int co) override;
 	//Every piece must define its own movement
+	//a rook can move in + shape but cannot jump over other pieces
+};
+class Knight :public Piece {
+public:
+	Knight(string c, int r, int co, char sym);
+
+	bool isValid_Move(int r, int co) override;
+	//Every piece must define its own movement
+	//Knight moves in an L shape and can jump over other pieces
+};
+
+class Bishop :public Piece {
+public:	
+	Bishop(string c, int r, int co, char sym);
+
+	bool isValid_Move(int r, int co) override;
+	//Every piece must define its own movement
+	//Bishop moves diagonally and cannot jump over other pieces
+
+};
+class Queen : public Piece {
+	Queen(string c, int r, int co, char sym);
+
+	bool isValid_Move(int r, int co) override;
+	//Queen piece  must define its own movement
+	//Queen can move in any direction (horizontally, vertically, diagonally) but cannot jump over other pieces
+	//Queen movement combines both the rook and bishop.
+
 };
