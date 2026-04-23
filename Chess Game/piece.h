@@ -70,3 +70,10 @@ class Queen : public Piece {
 	//Queen movement combines both the rook and bishop.
 
 };
+class King : public Piece {
+	public:
+	King(string c, int r, int co, char sym);
+	bool isValid_Move(int r, int co) override;
+	//King can move one square in any direction (horizontally, vertically, diagonally) but cannot jump over other pieces
+	//The king is the most important piece in chess. The objective of the game is to checkmate the opponent's king.
+};

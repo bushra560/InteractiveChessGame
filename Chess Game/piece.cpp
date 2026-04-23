@@ -28,6 +28,7 @@ void Piece::setPosition(int r, int co)
 	row = r;
 	col = co;
 }
+
 //***********************************
 //===========PAWN implementation=====
 //***********************************
@@ -58,7 +59,7 @@ Rook::Rook(string c, int r, int co, char sym)
 {
 }
 
-bool Rook::isValid_Move(int r, int co)
+bool Rook::isValid_Move(int r, int co)   
 {
 	return (r == getRow() || co == getCol());
 }
@@ -66,17 +67,54 @@ bool Rook::isValid_Move(int r, int co)
 //***********************************
 //===========Knight implementation=====
 //***********************************
+Knight::Knight(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'K')
+{
+}
 
+bool Knight::isValid_Move(int r, int co)
+{
+	
+		int rowDiff = abs(r - getRow());
+		int colDiff = abs(co - getCol());
+		return (rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2);
+
+}
 
 
 //***********************************
 //===========BISHOP implementation=====
 //***********************************
-
+Bishop::Bishop(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'B')
+{
+}
+bool Bishop::isValid_Move(int r, int co)
+{
+	return abs(r - getRow()) == abs(co - getCol());
+}
 //***********************************
 //===========QUEEN implementation=====
 //***********************************
-
+Queen::Queen(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'Q')
+{
+}
+bool Queen::isValid_Move(int r, int co)
+{
+	return (r == getRow() || co == getCol()) || (abs(r - getRow()) == abs(co - getCol()));
+}
 //***********************************
 //===========KING implementation=====
 //***********************************
+
+King::King(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'K')
+{
+}
+bool King::isValid_Move(int r, int co)
+{
+	int rowDiff = abs(r - getRow());
+	int colDiff = abs(co - getCol());
+	return (rowDiff <= 1 && colDiff <= 1);
+}
