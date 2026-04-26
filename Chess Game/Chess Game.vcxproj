@@ -129,10 +129,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="piece.cpp" />
-    <ClCompile Include="piececpp.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Source1.cpp" />
-    <ClCompile Include="Source2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.h" />
