@@ -38,8 +38,5 @@
     <ClInclude Include="chess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="piece.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
