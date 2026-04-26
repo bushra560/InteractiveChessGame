@@ -22,10 +22,10 @@ int main()
 
     // creating dynamic memory and intializing the Knights
     // Giving the position info and appearence of the piece 
-    board[0][1] = new Knight("black", 0, 1, 'K');
-    board[0][6] = new Knight("black", 0, 6, 'K');
-    board[7][1] = new Knight("white", 7, 1, 'K');
-    board[7][6] = new Knight("white", 7, 6, 'K');
+    board[0][1] = new Knight("black", 0, 1, 'N');
+    board[0][6] = new Knight("black", 0, 6, 'N');
+    board[7][1] = new Knight("white", 7, 1, 'N');
+    board[7][6] = new Knight("white", 7, 6, 'N');
 
     // creating dynamic memory and intializing the Bishop
     // Giving the position info and appearence of the piece 
@@ -180,7 +180,6 @@ int main()
         else
         {
             cout << "Invalid Move according to piece rules!" << endl;
-            continue;
         }
 
         // - Move piece

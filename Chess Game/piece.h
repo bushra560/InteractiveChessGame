@@ -3,6 +3,7 @@
 #include<iostream>
 #include<string>
 #include<cmath>   
+#include<cctype>
 using namespace std;
 
 class Piece
@@ -74,10 +75,15 @@ public:
 	bool isValid_Move(int r, int co, Piece* board[8][8]) override;	//King can move one square in any direction (horizontally, vertically, diagonally) but cannot jump over other pieces
 	//The king is the most important piece in chess. The objective of the game is to checkmate the opponent's king.
 };
-
+//***********************************
+//===========Helper Functions=====
+//***********************************
 
 //Additional function to parse user input like "E2" to row and column indices
 void parseInput(string pos, int& row, int& col);
 
 // Function to check if a square is attacked by any piece of the opposite color
 bool isSquareAttacked(int r, int co, const string& kingColor, Piece* board[8][8]);
+
+// Function to move a piece from one position to another
+void makeMove(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol)

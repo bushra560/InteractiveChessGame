@@ -84,6 +84,10 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 //***********************************
 //===========ROCK implementation=====
 //***********************************
+Rook::Rook(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'R')
+{
+}
 bool Rook::isValid_Move(int r, int co, Piece* board[8][8])
 {
 	if (!(r == getRow() || co == getCol()))
@@ -136,6 +140,10 @@ bool Knight::isValid_Move(int r, int co, Piece* board[8][8])
 //***********************************
 //===========BISHOP implementation=====
 //***********************************
+Bishop::Bishop(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'B')
+{
+}
 bool Bishop::isValid_Move(int r, int co, Piece* board[8][8])
 {
 	if (abs(r - getRow()) != abs(co - getCol()))
@@ -161,6 +169,10 @@ bool Bishop::isValid_Move(int r, int co, Piece* board[8][8])
 //***********************************
 //===========QUEEN implementation=====
 //***********************************
+Queen::Queen(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'Q')
+{
+}
 bool Queen::isValid_Move(int r, int co, Piece* board[8][8])
 {
 	int currRow = getRow();
@@ -213,7 +225,10 @@ bool Queen::isValid_Move(int r, int co, Piece* board[8][8])
 //***********************************
 //===========KING implementation=====A
 //***********************************
-
+King::King(string c, int r, int co, char sym)
+	: Piece(c, r, co, 'K')
+{
+}
 bool isSquareAttacked(int r, int co, const string& kingColor, Piece* board[8][8])
 {
 	for (int i = 0; i < 8; i++)
@@ -248,4 +263,28 @@ bool King::isValid_Move(int r, int co, Piece* board[8][8])
 		return false;
 
 	return true;
+}
+
+// Helper function to convert user input like "E2" to row and column indices
+void parseInput(string pos, int& row, int& col)
+{
+	col = toupper(pos[0]) - 'A';   // A-H → 0-7
+	int boardRow = pos[1] - '0';   // '1'-'8' → 1-8
+
+	row = 8 - boardRow;            // convert to array index
+}
+
+
+//***********************************
+//===========Helper Functions=====
+//***********************************
+
+void makeMove(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol)
+{
+	if (board[toRow][toCol] != nullptr)
+		delete board[toRow][toCol];
+
+	board[toRow][toCol] = board[fromRow][fromCol];
+	board[fromRow][fromCol] = nullptr;
+	board[toRow][toCol]->setPosition(toRow, toCol);
 }
