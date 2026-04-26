@@ -118,3 +118,12 @@ bool King::isValid_Move(int r, int co)
 	int colDiff = abs(co - getCol());
 	return (rowDiff <= 1 && colDiff <= 1);
 }
+
+// Helper function to convert user input like "E2" to row and column indices
+void parseInput(string pos, int& row, int& col)
+{
+	col = toupper(pos[0]) - 'A';   // A-H → 0-7
+	int boardRow = pos[1] - '0';   // '1'-'8' → 1-8
+
+	row = 8 - boardRow;            // convert to array index
+}

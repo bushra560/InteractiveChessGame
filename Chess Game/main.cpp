@@ -69,15 +69,29 @@ int main()
     while (true)
     {
         // STEP 1: Variables for move
-        int fromRow, fromCol;   // source position (where piece is)
-        int toRow, toCol;       // destination position (where to move)
+        int fromRow, fromCol;  
+        int toRow, toCol;      
 
-        //Take user input
-        cout << "Enter FROM position (row col): ";
-        cin >> fromRow >> fromCol;
-        cout << "Enter TO position (row col): ";
-        cin >> toRow >> toCol;
+        string from, to; // source position (where piece is)
+        // destination position (where to move)
+        cout << "Enter FROM position (e.g., C2): ";
+        cin >> from;
 
+        cout << "Enter TO position (e.g., C3): ";
+        cin >> to;
+
+       
+
+        parseInput(from, fromRow, fromCol);
+        parseInput(to, toRow, toCol);
+        // Validate input format
+
+        if (fromRow < 0 || fromRow >= 8 || fromCol < 0 || fromCol >= 8 ||
+            toRow < 0 || toRow >= 8 || toCol < 0 || toCol >= 8)
+        {
+            cout << "Invalid input!" << endl;
+            continue;
+        }
         //Check source validity
         // If there is no piece at selected position
         if (board[fromRow][fromCol] == nullptr)
