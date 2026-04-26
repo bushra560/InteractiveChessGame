@@ -59,7 +59,7 @@ Rook::Rook(string c, int r, int co, char sym)
 {
 }
 
-bool Rook::isValid_Move(int r, int co)   
+bool Rook::isValid_Move(int r, int co)
 {
 	return (r == getRow() || co == getCol());
 }
@@ -74,10 +74,10 @@ Knight::Knight(string c, int r, int co, char sym)
 
 bool Knight::isValid_Move(int r, int co)
 {
-	
-		int rowDiff = abs(r - getRow());
-		int colDiff = abs(co - getCol());
-		return (rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2);
+
+	int rowDiff = abs(r - getRow());
+	int colDiff = abs(co - getCol());
+	return (rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2);
 
 }
 
@@ -105,7 +105,7 @@ bool Queen::isValid_Move(int r, int co)
 	return (r == getRow() || co == getCol()) || (abs(r - getRow()) == abs(co - getCol()));
 }
 //***********************************
-//===========KING implementation=====
+//===========KING implementation=====A
 //***********************************
 
 King::King(string c, int r, int co, char sym)

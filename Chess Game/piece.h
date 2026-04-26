@@ -1,7 +1,8 @@
- //File name is piece.h to follow naming convension
+//File name is piece.h to follow naming convension
 #pragma once
 #include<iostream>
 #include<string>
+#include<cmath>   
 using namespace std;
 
 class Piece
@@ -20,7 +21,7 @@ public:
 	int getRow();
 	int getCol();
 	//because we cannot access them directly
-	void setPosition(int r, int co);//informing about the positions uupdating 
+	void setPosition(int r, int co);//informing about the positions updating 
 
 	virtual bool isValid_Move(int r, int co) = 0;//Pure virtual function bcz there is no default behaviour of this function in the base class
 	//Every piece must define its own movement
@@ -53,7 +54,7 @@ public:
 };
 
 class Bishop :public Piece {
-public:	
+public:
 	Bishop(string c, int r, int co, char sym);
 
 	bool isValid_Move(int r, int co) override;
@@ -62,6 +63,7 @@ public:
 
 };
 class Queen : public Piece {
+public:
 	Queen(string c, int r, int co, char sym);
 
 	bool isValid_Move(int r, int co) override;
@@ -71,7 +73,7 @@ class Queen : public Piece {
 
 };
 class King : public Piece {
-	public:
+public:
 	King(string c, int r, int co, char sym);
 	bool isValid_Move(int r, int co) override;
 	//King can move one square in any direction (horizontally, vertically, diagonally) but cannot jump over other pieces
