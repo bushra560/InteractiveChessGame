@@ -118,8 +118,7 @@ int main()
             continue;//skip this iteration , go back to input
         }
         // - Check valid move using isValid_Move()
-        if (board[fromRow][fromCol]->isValid_Move(toRow, toCol))
-            // Move Validation
+        if (board[fromRow][fromCol]->isValid_Move(toRow, toCol, board))            // Move Validation
             //passing destination Row and Columns
         {
             // - Check destination cell
