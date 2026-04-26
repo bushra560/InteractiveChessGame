@@ -75,5 +75,9 @@ public:
 	//The king is the most important piece in chess. The objective of the game is to checkmate the opponent's king.
 };
 
+
 //Additional function to parse user input like "E2" to row and column indices
 void parseInput(string pos, int& row, int& col);
+
+// Function to check if a square is attacked by any piece of the opposite color
+bool isSquareAttacked(int r, int co, const string& kingColor, Piece* board[8][8]);

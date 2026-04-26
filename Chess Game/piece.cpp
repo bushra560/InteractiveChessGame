@@ -57,6 +57,8 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 			board[r][co] != nullptr &&
 			board[r][co]->getColor() != "white")
 			return true;
+		// En passant capture can be implemented here if desired
+	
 	}
 	else // BLACK PAWN
 	{ // First move can be two squares forward
@@ -74,7 +76,7 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 			board[r][co]->getColor() != "black")
 			return true;
 	}
-
+	return false;
 };
 
 
@@ -212,22 +214,38 @@ bool Queen::isValid_Move(int r, int co, Piece* board[8][8])
 //===========KING implementation=====A
 //***********************************
 
-King::King(string c, int r, int co, char sym)
-	: Piece(c, r, co, 'K')
+bool isSquareAttacked(int r, int co, const string& kingColor, Piece* board[8][8])
 {
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (board[i][j] != nullptr && board[i][j]->getColor() != kingColor)
+			{
+				if (board[i][j]->isValid_Move(r, co, board))
+					return true;
+			}
+		}
+	}
+	return false;
 }
+
 bool King::isValid_Move(int r, int co, Piece* board[8][8])
 {
 	int rowDiff = abs(r - getRow());
 	int colDiff = abs(co - getCol());
-	return (rowDiff <= 1 && colDiff <= 1);
-}
 
-// Helper function to convert user input like "E2" to row and column indices
-void parseInput(string pos, int& row, int& col)
-{
-	col = toupper(pos[0]) - 'A';   // A-H → 0-7
-	int boardRow = pos[1] - '0';   // '1'-'8' → 1-8
+	if (rowDiff > 1 || colDiff > 1)
+		return false;
 
-	row = 8 - boardRow;            // convert to array index
+	if (r == getRow() && co == getCol())
+		return false;
+
+	if (board[r][co] != nullptr && board[r][co]->getColor() == getColor())
+		return false;
+
+	if (isSquareAttacked(r, co, getColor(), board))
+		return false;
+
+	return true;
 }
