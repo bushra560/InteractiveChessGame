@@ -1,5 +1,18 @@
 #include "piece.h"//including header file
 
+// ================= GLOBAL VARIABLES (for special moves) =================
+int lastDoublePawnRow = -1;
+int lastDoublePawnCol = -1;
+string lastDoublePawnColor = "";
+bool lastMoveWasDoublePawn = false;
+// Track castling rights
+bool whiteKingMoved = false;
+bool blackKingMoved = false;
+bool whiteRookAMoved = false; // queenside rook
+bool whiteRookHMoved = false; // kingside rook
+bool blackRookAMoved = false;
+bool blackRookHMoved = false;
+
 int main()
 {
     // we will be creating an 8x8 matrix that is initially empty
@@ -69,8 +82,8 @@ int main()
     while (true)
     {
         // STEP 1: Variables for move
-        int fromRow, fromCol;  
-        int toRow, toCol;      
+        int fromRow, fromCol;
+        int toRow, toCol;
 
         string from, to; // source position (where piece is)
         // destination position (where to move)
@@ -80,7 +93,7 @@ int main()
         cout << "Enter TO position (e.g., C3): ";
         cin >> to;
 
-       
+
 
         parseInput(from, fromRow, fromCol);
         parseInput(to, toRow, toCol);
@@ -197,7 +210,7 @@ int main()
             }
         }
     }
- 
+
     system("pause");
     return 0;
 }

@@ -5,19 +5,17 @@
 #include<cmath>   
 #include<cctype>
 using namespace std;
-struct GameState {
-	// Track last move for en passant
-	int fromRow = -1, fromCol = -1;
-	int toRow = -1, toCol = -1;
 
-	// Track castling rights
-	bool whiteKingMoved = false;
-	bool blackKingMoved = false;
-	bool whiteRookAMoved = false; // queenside rook
-	bool whiteRookHMoved = false; // kingside rook
-	bool blackRookAMoved = false;
-	bool blackRookHMoved = false;
-};
+extern bool whiteKingMoved;
+extern bool blackKingMoved;
+extern bool whiteRookAMoved;
+extern bool whiteRookHMoved;
+extern bool blackRookAMoved;
+extern bool blackRookHMoved;
+extern int lastDoublePawnRow;
+extern int lastDoublePawnCol;
+extern bool lastMoveWasDoublePawn;
+extern string lastDoublePawnColor;
 
 
 class Piece

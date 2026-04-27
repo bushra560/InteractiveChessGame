@@ -42,20 +42,20 @@ bool canEnPassant(Piece* board[8][8], int fromRow, int fromCol, int toRow, int t
 }
 
 // This function performs the en passant capture
-void doEnPassant(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol,
-    const string& turn)
+void doEnPassant(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol, const string& turn)
 {
-    // Find the row of pawn to be captured
     int capRow = (turn == "white") ? toRow + 1 : toRow - 1;
 
-    // Delete the captured pawn
+    // Delete captured pawn
     delete board[capRow][toCol];
     board[capRow][toCol] = nullptr;
 
-    // Move current pawn to destination
-    makeMove(board, fromRow, fromCol, toRow, toCol);
+    // Move current pawn
+    Piece* pawn = board[fromRow][fromCol];
+    board[toRow][toCol] = pawn;
+    board[fromRow][fromCol] = nullptr;
+    pawn->setPosition(toRow, toCol);
 }
-
 
 // ======================= CASTLING =======================
 

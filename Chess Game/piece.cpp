@@ -58,7 +58,15 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 			board[r][co]->getColor() != "white")
 			return true;
 		
-	
+		// EN PASSANT (WHITE)
+		if (r == currRow - 1 && abs(co - currCol) == 1 && board[r][co] == nullptr)
+		{
+			if (canEnPassant(board, currRow, currCol, r, co,
+				"white",
+				lastDoublePawnRow, lastDoublePawnCol,
+				lastDoublePawnColor, lastMoveWasDoublePawn))
+				return true;
+		}
 	}
 	else // BLACK PAWN
 	{ // First move can be two squares forward
@@ -76,7 +84,15 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 			board[r][co]->getColor() != "black")
 			return true;
 	}
-	
+	// EN PASSANT (BLACK)
+	if (r == currRow + 1 && abs(co - currCol) == 1 && board[r][co] == nullptr)
+	{
+		if (canEnPassant(board, currRow, currCol, r, co,
+			"black",
+			lastDoublePawnRow, lastDoublePawnCol,
+			lastDoublePawnColor, lastMoveWasDoublePawn))
+			return true;
+	}
 
 	
 	return false;
@@ -250,6 +266,8 @@ bool isSquareAttacked(int r, int co, const string& kingColor, Piece* board[8][8]
 
 bool King::isValid_Move(int r, int co, Piece* board[8][8])
 {
+	int currRow = getRow();
+	int currCol = getCol();
 	int rowDiff = abs(r - getRow());
 	int colDiff = abs(co - getCol());
 
@@ -264,9 +282,18 @@ bool King::isValid_Move(int r, int co, Piece* board[8][8])
 
 	if (isSquareAttacked(r, co, getColor(), board))
 		return false;
-	
+	// ================= CASTLING =================
+	if (r == currRow && currCol == 4) // King must be at original column
+	{
+		if (co == 6) // King side
+			return canCastleKingSide(board, getColor(), currRow, currCol, false, false);
 
-	return true;
+		if (co == 2) // Queen side
+			return canCastleQueenSide(board, getColor(), currRow, currCol, false, false);
+	}
+
+	return false;
+
 }
 
 //***********************************
@@ -289,13 +316,60 @@ King::~King() {}
 // Helper function to move a piece on the board
 void makeMove(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol)
 {
-	if (board[toRow][toCol] != nullptr)
-		delete board[toRow][toCol];
+	Piece* movingPiece = board[fromRow][fromCol];
 
-	board[toRow][toCol] = board[fromRow][fromCol];
-	board[fromRow][fromCol] = nullptr;
-	board[toRow][toCol]->setPosition(toRow, toCol);
+	// ================= EN PASSANT =================
+	if (dynamic_cast<Pawn*>(movingPiece) &&
+		canEnPassant(board, fromRow, fromCol, toRow, toCol,
+			movingPiece->getColor(),
+			lastDoublePawnRow, lastDoublePawnCol,
+			lastDoublePawnColor, lastMoveWasDoublePawn))
+	{
+		doEnPassant(board, fromRow, fromCol, toRow, toCol, movingPiece->getColor());
+	}
 
+	// ================= CASTLING =================
+	else if (dynamic_cast<King*>(movingPiece) && abs(toCol - fromCol) == 2)
+	{
+		if (toCol == 6)
+			doCastleKingSide(board, fromRow);
+		else if (toCol == 2)
+			doCastleQueenSide(board, fromRow);
+	}
+
+	// ================= NORMAL MOVE =================
+	else
+	{
+		if (board[toRow][toCol] != nullptr)
+			delete board[toRow][toCol];
+
+		board[toRow][toCol] = movingPiece;
+		board[fromRow][fromCol] = nullptr;
+		board[toRow][toCol]->setPosition(toRow, toCol);
+	}
+
+	// ================= TRACK DOUBLE PAWN MOVE =================
+	if (dynamic_cast<Pawn*>(movingPiece) && abs(toRow - fromRow) == 2)
+	{
+		lastMoveWasDoublePawn = true;
+		lastDoublePawnRow = toRow;
+		lastDoublePawnCol = toCol;
+		lastDoublePawnColor = movingPiece->getColor();
+	}
+	else
+	{
+		lastMoveWasDoublePawn = false;
+	}
+
+	// ================= PROMOTION =================
+	if (canPromote(board, toRow, toCol))
+	{
+		char choice;
+		cout << "Promote to (Q/R/B/N): ";
+		cin >> choice;
+
+		promotePawn(board, toRow, toCol, choice, movingPiece->getColor());
+	}
 }
 // Helper function to convert user input like "E2" to row and column indices
 void parseInput(string pos, int& row, int& col)
