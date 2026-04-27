@@ -5,6 +5,20 @@
 #include<cmath>   
 #include<cctype>
 using namespace std;
+struct GameState {
+	// Track last move for en passant
+	int fromRow = -1, fromCol = -1;
+	int toRow = -1, toCol = -1;
+
+	// Track castling rights
+	bool whiteKingMoved = false;
+	bool blackKingMoved = false;
+	bool whiteRookAMoved = false; // queenside rook
+	bool whiteRookHMoved = false; // kingside rook
+	bool blackRookAMoved = false;
+	bool blackRookHMoved = false;
+};
+
 
 class Piece
 {
@@ -87,3 +101,34 @@ void parseInput(string pos, int& row, int& col);
 // Function to check if a square is attacked by any piece of the opposite color
 bool isSquareAttacked(int r, int co, const string& kingColor, Piece* board[8][8]);
 
+
+//***********************************
+//===========Special Moves Functions=====
+//***********************************
+
+// Move a piece normally
+void makeMove(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol);
+
+// En passant
+bool canEnPassant(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol,
+	const string& turn,
+	int lastDoublePawnRow, int lastDoublePawnCol,
+	const string& lastDoublePawnColor, bool lastMoveWasDoublePawn);
+
+void doEnPassant(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol,
+	const string& turn);
+
+// Castling
+bool canCastleKingSide(Piece* board[8][8], const string& color, int row, int col,
+	bool kingMoved, bool rookMoved);
+
+bool canCastleQueenSide(Piece* board[8][8], const string& color, int row, int col,
+	bool kingMoved, bool rookMoved);
+
+void doCastleKingSide(Piece* board[8][8], int row);
+void doCastleQueenSide(Piece* board[8][8], int row);
+
+// Promotion
+bool canPromote(Piece* board[8][8], int row, int col);
+
+void promotePawn(Piece* board[8][8], int row, int col, char choice, const string& color);

@@ -57,7 +57,7 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 			board[r][co] != nullptr &&
 			board[r][co]->getColor() != "white")
 			return true;
-		// En passant capture can be implemented here if desired
+		
 	
 	}
 	else // BLACK PAWN
@@ -76,6 +76,9 @@ bool Pawn::isValid_Move(int r, int co, Piece* board[8][8])
 			board[r][co]->getColor() != "black")
 			return true;
 	}
+	
+
+	
 	return false;
 };
 
@@ -123,7 +126,7 @@ bool Rook::isValid_Move(int r, int co, Piece* board[8][8])
 //===========Knight implementation=====
 //***********************************
 Knight::Knight(string c, int r, int co, char sym)
-	: Piece(c, r, co, 'K')
+	: Piece(c, r, co, 'N')
 {
 }
 
@@ -261,24 +264,29 @@ bool King::isValid_Move(int r, int co, Piece* board[8][8])
 
 	if (isSquareAttacked(r, co, getColor(), board))
 		return false;
+	
 
 	return true;
 }
 
-// Helper function to convert user input like "E2" to row and column indices
-void parseInput(string pos, int& row, int& col)
-{
-	col = toupper(pos[0]) - 'A';   // A-H → 0-7
-	int boardRow = pos[1] - '0';   // '1'-'8' → 1-8
+//***********************************
+//===========DESTRUCTORS=============
+//***********************************
 
-	row = 8 - boardRow;            // convert to array index
-}
+Piece::~Piece() {}
 
+Pawn::~Pawn() {}
+Rook::~Rook() {}
+Knight::~Knight() {}
+Bishop::~Bishop() {}
+Queen::~Queen() {}
+King::~King() {}
 
 //***********************************
 //===========Helper Functions=====
 //***********************************
 
+// Helper function to move a piece on the board
 void makeMove(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol)
 {
 	if (board[toRow][toCol] != nullptr)
@@ -287,4 +295,13 @@ void makeMove(Piece* board[8][8], int fromRow, int fromCol, int toRow, int toCol
 	board[toRow][toCol] = board[fromRow][fromCol];
 	board[fromRow][fromCol] = nullptr;
 	board[toRow][toCol]->setPosition(toRow, toCol);
+
+}
+// Helper function to convert user input like "E2" to row and column indices
+void parseInput(string pos, int& row, int& col)
+{
+	col = toupper(pos[0]) - 'A';   // A-H → 0-7
+	int boardRow = pos[1] - '0';   // '1'-'8' → 1-8
+
+	row = 8 - boardRow;            // convert to array index
 }

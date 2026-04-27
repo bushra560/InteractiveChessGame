@@ -21,9 +21,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpecialMove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="special_move.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
