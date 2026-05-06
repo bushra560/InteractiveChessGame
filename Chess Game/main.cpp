@@ -11,6 +11,8 @@ bool whiteRookAMoved = false; // queenside rook
 bool whiteRookHMoved = false; // kingside rook
 bool blackRookAMoved = false;
 bool blackRookHMoved = false;
+
+int halfMoveClock = 0;// counts moves for the 50-move draw rule
 int main()
 {
     Piece* board[8][8] = { nullptr };
@@ -46,9 +48,40 @@ int main()
     while (true)
     {
         system("cls");
+		//==================== CHECK FOR GAME END CONDITIONS ====================
+        
+        // 1. Checkmate Check
+        if (isInCheck(turn, board) && !hasLegalMoves(turn, board)) {
+            cout << "\nCHECKMATE! " << (turn == "white" ? "Black" : "White") << " wins!" << endl;
+            break;
+        }
 
+        // 2. Stalemate Check
+        if (isStalemate(turn, board)) {
+            cout << "\nSTALEMATE! Game is a draw. " << turn << " has no legal moves." << endl;
+            break;
+        }
+
+        // 3. Insufficient Material Check
+        if (hasInsufficientMaterial(board)) {
+            cout << "\nDRAW! Insufficient material to force a checkmate." << endl;
+            break;
+        }
+
+        // 4. 50-Move Rule Check (100 half-moves)
+        if (halfMoveClock >= 100) {
+            cout << "\nDRAW! 50 consecutive moves without a capture or pawn push." << endl;
+            break;
+        }
+
+        //==================================================================================
         cout << "\nCurrent Turn: " << turn << endl;
 
+        if (isInCheck(turn, board)) {
+            cout << "!!! WARNING: YOU ARE IN CHECK !!!" << endl;
+        }
+
+		//==================== DISPLAY BOARD ====================
         cout << "\n   A B C D E F G H" << endl;
         cout << "  -----------------" << endl;
 
