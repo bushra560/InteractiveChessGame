@@ -133,7 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.h" />
-    <ClInclude Include="special_move.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

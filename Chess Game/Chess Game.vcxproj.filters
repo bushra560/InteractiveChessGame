@@ -29,8 +29,5 @@
     <ClInclude Include="chess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="special_move.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
