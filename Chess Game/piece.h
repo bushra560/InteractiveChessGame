@@ -136,11 +136,11 @@ void promotePawn(Piece* board[8][8], int row, int col, char choice, const string
 //===========Checkmate & InCheck =====
 //***********************************
 bool isMoveSafe(int fromR, int fromC, int toR, int toC, string color, Piece* board[8][8]);
-	bool isInCheck(string color, Piece* board[8][8]);
-	bool hasLegalMoves(string color, Piece* board[8][8]);
+bool isInCheck(string color, Piece* board[8][8]);
+bool hasLegalMoves(string color, Piece* board[8][8]);
 
 //***********************************
 //=========== Draw Function =====
 //***********************************
-	bool hasInsufficientMaterial(Piece* board[8][8]);
-	bool isStalemate(string color, Piece* board[8][8]);
+bool hasInsufficientMaterial(Piece* board[8][8]);
+bool isStalemate(string color, Piece* board[8][8]);
